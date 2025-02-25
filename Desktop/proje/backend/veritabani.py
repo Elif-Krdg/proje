@@ -1,20 +1,25 @@
 import mysql.connector
 
-# MySQL bağlantısını oluştur
-db = mysql.connector.connect(
-    host="localhost",
-    user="root",  # XAMPP'de varsayılan kullanıcı adı
-    password="",  # Varsayılan şifre boş olabilir
-    database="okul_sistemi"  # Bağlantı yapılacak veritabanı adı
-)
+def get_db():
+    """Veritabanı bağlantısını oluştur ve döndür."""
+    db = mysql.connector.connect(
+        host="localhost",
+        user="root",  # XAMPP'de varsayılan kullanıcı adı
+        password="",  # Varsayılan şifre boş olabilir
+        database="okul_sistemi"  # Veritabanı adı
+    )
+    return db
 
-cursor = db.cursor()
+def init_db(app):
+    """Veritabanı bağlantısını başlat (Flask için)"""
+    with app.app_context():
+        db = get_db()
+        cursor = db.cursor()
+        cursor.execute("SELECT DATABASE();")
+        print(f"Bağlı olunan veritabanı: {cursor.fetchone()[0]}")
+        cursor.close()
+        db.close()
 
-# Kullanıcıları listeleme testi
-cursor.execute("SELECT * FROM kullanıcılar")  # Tablo adını 'kullanıcılar' olarak bıraktık
-users = cursor.fetchall()
-
-for user in users:
-    print(user)
-
-db.close()
+def close_db(app):
+    """Veritabanı bağlantısını kapat (Flask için)"""
+    pass  # Flask için teardown'da kullanılacaksa, burada ekstra işlem yapılabilir.
