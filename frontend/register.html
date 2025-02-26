@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,23 +17,14 @@
 
     <section>
         <form id="register-form">
-            <label for="full-name">Ad Soyad:</label>
-            <input type="text" id="full-name" name="full-name" required>
+            <label for="name">Ad Soyad:</label>
+            <input type="text" id="name" name="name" required>
 
             <label for="student-id">Öğrenci Numarası:</label>
             <input type="text" id="student-id" name="student-id" required>
 
             <label for="email">E-posta:</label>
             <input type="email" id="email" name="email" required>
-
-            <label for="username">Kullanıcı Adı:</label>
-            <input type="text" id="username" name="username" required>
-
-            <label for="university">Üniversite Adı:</label>
-            <input type="text" id="university" name="university" required>
-
-            <label for="department">Bölüm Adı:</label>
-            <input type="text" id="department" name="department" required>
 
             <label for="password">Şifre:</label>
             <input type="password" id="password" name="password" required>
@@ -49,6 +40,162 @@
         <p>&copy; 2025 Öğrenci Portalı</p>
     </footer>
 
-    <script src="assets/js/script.js"></script>
+    <script>
+        // Formu submit ederken backend'e POST isteği gönderecek JavaScript kodu
+        document.getElementById('register-form').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Sayfanın yenilenmesini engelle
+
+            const name = document.getElementById('name').value;
+            const studentId = document.getElementById('student-id').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            // Boş alanları kontrol et
+            // if (!name || !studentId || !email || !password || !confirmPassword) {
+            //     alert("Lütfen tüm alanları doldurun!");
+            //     return;
+            // }
+            
+
+            // Şifrelerin eşleştiğini kontrol et
+            if (password !== confirmPassword) {
+                alert("Şifreler uyuşmuyor!");
+                return;
+            }
+
+            // POST isteği gönder
+            try {
+                const response = await fetch('http://localhost:5000/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        name: name, 
+                        email: email, 
+                        password: password, 
+                        student_id: studentId,
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Kayıt başarılı!');
+                    window.location.href = "login.html"; // Başarılı kayıt sonrası giriş sayfasına yönlendirme
+                } else {
+                    alert('Hata: ' + data.msg);
+                }
+            } catch (error) {
+                console.error('Hata:', error);
+                alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+            }
+        });
+    </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ol</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>KAYIT OL</h1>
+        <nav>
+            <a href="index.html">Ana Sayfa</a>
+            <a href="login.html">Giriş Yap</a>
+        </nav>
+    </header>
+
+    <section>
+        <form id="register-form">
+            <div class="form-group">
+                <label for="full-name">Ad Soyad:</label>
+                <input type="text" id="full-name" name="full-name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="student-id">Öğrenci Numarası:</label>
+                <input type="text" id="student-id" name="student-id" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-posta:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Şifre:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm-password">Şifre Tekrar:</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+            </div>
+
+            <button type="submit">Kayıt Ol</button>
+        </form>
+    </section>
+    <footer>
+        <p>&copy; 2025 Öğrenci Portalı</p>
+    </footer>
+    <script>
+        // Formu submit ederken backend'e POST isteği gönderecek JavaScript kodu
+        document.getElementById('register-form').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Sayfanın yenilenmesini engelle
+
+            const name = document.getElementById('name').value;
+            const studentId = document.getElementById('student-id').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            // Boş alanları kontrol et
+            // if (!name || !studentId || !email || !password || !confirmPassword) {
+            //     alert("Lütfen tüm alanları doldurun!");
+            //     return;
+            // }
+            
+
+            // Şifrelerin eşleştiğini kontrol et
+            if (password !== confirmPassword) {
+                alert("Şifreler uyuşmuyor!");
+                return;
+            }
+
+            // POST isteği gönder
+            try {
+                const response = await fetch('http://localhost:5000/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        name: name, 
+                        email: email, 
+                        password: password, 
+                        student_id: studentId,
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Kayıt başarılı!');
+                    window.location.href = "login.html"; // Başarılı kayıt sonrası giriş sayfasına yönlendirme
+                } else {
+                    alert('Hata: ' + data.msg);
+                }
+            } catch (error) {
+                console.error('Hata:', error);
+                alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+            }
+        });
+    </script>
 </body>
 </html>

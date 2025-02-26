@@ -1,43 +1,45 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const db = require('../config/db');
+const db = require('../config/db'); // Veritabanı bağlantısını içe aktarın
 
 const router = express.Router();  // BU SATIRI EKLEDİĞİNDEN EMİN OL!
 
-
-
 router.post('/register', async (req, res) => {
-    const { name, email, password, universite_id } = req.body;
+    const { name, email, password, student_id} = req.body;
 
-    if (!name || !email || !password || !universite_id) {
-        return res.status(400).json({ msg: "Tüm alanları doldurun" });
-    }
+    // if (!name || !studentId || !email || !password || !confirmPassword) {
+    //     return res.status(400).json({ msg: "Tüm alanları doldurun" });
+    // }
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        db.query("INSERT INTO kullanıcılar (name, email, password, universite_id) VALUES (?, ?, ?, ?)", 
-            [name, email, hashedPassword, universite_id], 
+        // Kullanıcıyı ekle
+        db.query("INSERT INTO kullanıcılar (name, email, password, student_id) VALUES (?, ?, ?, ?)", 
+            [name, email, hashedPassword, student_id], 
             (err, result) => {
-                if (err) return res.status(500).json({ msg: "Kayıt başarısız!" });
+                if (err) {
+                    console.error('Veritabanı hatası:', err); // Hata mesajını konsola yazdır
+                    return res.status(500).json({ msg: "Kayıt başarısız!", error: err });
+                }
                 res.status(201).json({ msg: "Kayıt başarılı!" });
             }
         );
     } catch (err) {
-        res.status(500).json({ msg: "Sunucu hatası!" });
+        console.error('Sunucu hatası:', err); // Hata mesajını konsola yazdır
+        res.status(500).json({ msg: "Sunucu hatası!", error: err });
     }
 });
+
 router.post('/login', (req, res) => {
-    const { email, password } = req.body;
+    const { name, password } = req.body;
 
     const sql = `
-        SELECT users.*, universities.universite_adı 
-        FROM users 
-        JOIN universities ON users.universite_id = universities.id 
-        WHERE users.email = ?`;
+        SELECT * FROM kullanıcılar
+        WHERE name = ?`;
 
-    db.query(sql, [email], async (err, results) => {
+    db.query(sql, [name], async (err, results) => {
         if (err || results.length === 0) {
             return res.status(401).json({ msg: "Kullanıcı bulunamadı!" });
         }
@@ -54,11 +56,11 @@ router.post('/login', (req, res) => {
             user: {
                 id: user.id,
                 name: user.name,
-                email: user.email,
-                universite_id: user.universite_id,
-                universite_adı: user.universite_adı // Üniversite adı bilgisi !
+                email: user.email, 
+
             }
         });
     });
 });
+
 module.exports = router;

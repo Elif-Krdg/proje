@@ -2,18 +2,18 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #d4edda; /* Açık yeşil tonu */
+    background-color: #d4edda; /* Açık yeşil tonu */
 }
 
 header, footer {
-    background-color: #2e7d32; /* Koyu yeşil tonu */
+    background-color: #2e7d32; /* Koyu yeşil tonu */
     color: white;
     padding: 0.5rem; /* Daha dar hale getirildi */
     text-align: center;
 }
 
 header h1 {
-    text-transform: uppercase; /* Tüm harfler büyük */
+    text-transform: uppercase; /* Tüm harfler büyük */
 }
 
 nav a {
@@ -36,17 +36,21 @@ section {
 form {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     max-width: 400px;
     margin: 0 auto;
 }
 
-form label, form input {
-    margin-bottom: 1rem;
+form label {
+    display: inline-block;
+    width: 120px; /* Etiketlerin genişliği */
+    margin-bottom: 0.5rem;
 }
 
 form input {
     padding: 0.5rem;
     font-size: 1rem;
+    width: 200px; /* Giriş alanlarının genişliği */
 }
 
 button {
@@ -55,26 +59,65 @@ button {
     color: white;
     border: none;
     cursor: pointer;
+    margin-top: 1rem;
+    width: 220px; /* Butonun genişliği */
 }
 
+/* Hover efekti */
 button:hover {
     background-color: #5a9bd6;
 }
 
-.dashboard-container {
+/* Profil Sayfası Stilleri */
+#profile-section {
+    display: flex;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #2e7d32;
+    color: white;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 80vh;
 }
 
-.dashboard-content {
-    background: white;
-    padding: 2rem;
+.sidebar p {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.sidebar button {
+    background-color: white;
+    color: #2e7d32;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.sidebar button:hover {
+    background-color: #d4edda;
+}
+
+.content-area {
+    flex-grow: 1;
+    background-color: white;
+    padding: 20px;
+    margin-left: 20px;
     border-radius: 8px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
 }
-
+.hidden {
+    display: none;
+}

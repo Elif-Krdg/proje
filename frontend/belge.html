@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dosya Yükleme</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .upload-container {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            display: inline-block;
+            cursor: pointer;
+        }
+        #fileInput {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h2>Dosya Yükleme</h2>
+    <label class="upload-container" for="fileInput">
+        <p>Dosya Seç veya Sürükleyip Bırak</p>
+    </label>
+    <input type="file" id="fileInput">
+    <p id="fileName"></p>
+    <button onclick="uploadFile()">Yükle</button>
+    
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById('fileName').textContent = `Seçilen dosya: ${file.name}`;
+            }
+        });
+
+        function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            if (fileInput.files.length === 0) {
+                alert("Lütfen bir dosya seçin!");
+                return;
+            }
+            alert("Dosya başarıyla yüklendi!");
+            // Burada dosyayı sunucuya göndermek için AJAX veya Fetch API kullanılabilir
+        }
+    </script>
+</body>
+</html>

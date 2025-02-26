@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Sayfası</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>ÖĞRENCİ PORTALI</h1>
+    </header>
+
+    <section id="profile-section">
+        <div class="sidebar">
+            <p id="username-display"></p>
+            <button onclick="showSection('favorites')">Beğenilenler</button>
+            <button onclick="showSection('uploaded-files')">Yüklenen Dosyalar</button>
+            <button onclick="showSection('upload')">Dosya Yükle</button>
+            <button onclick="logout()">Çıkış Yap &#x2716;</button>
+        </div>
+        <div class="content-area" id="content-display">
+            <p>Hoşgeldiniz! Lütfen bir seçenek seçin.</p>
+        </div>
+    </section>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

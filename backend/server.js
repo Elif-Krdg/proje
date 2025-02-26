@@ -16,4 +16,4 @@ app.listen(PORT, () => console.log(`Server ${PORT} portunda çalışıyor...`));
 
 const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
-
+    
